@@ -1,0 +1,63 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.9'
+}
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.retry:spring-retry')
+    implementation('org.springframework.boot:spring-boot-starter-aop')
+
+    // Use JUnit test framework.
+    testImplementation 'junit:junit:4.13.2'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+}
+
+tasks.named("bootJar") {
+    archiveClassifier = 'boot'
+}
+
+tasks.named("jar") {
+    archiveClassifier = ''
+}
+
+/*tasks.named("jar") {
+    enabled = false
+}*/
+
+tasks.named("bootJar") {
+    mainClass = 'com.sannu.spring.retry.App'
+}
+
+tasks.named("bootRun") {
+    mainClass = 'com.sannu.spring.retry.App'
+    //systemProperty 'com.example.property', findProperty('example') ?: 'default'
+}
+
+springBoot {
+    mainClass = 'com.sannu.spring.retry.App'
+}
+
+/*
+tasks.named("bootJar") {
+    launchScript {
+        properties 'logFilename': 'example-app.log'
+    }
+}
+
+tasks.named("bootJar") {
+    launchScript {
+        script = file('src/custom.script')
+    }
+}*/
